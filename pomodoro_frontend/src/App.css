@@ -1,104 +1,208 @@
-/* CSS Variables for Theme Management */
-:root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
-}
+/* Pomodoro Light Theme (per provided style guide)
+   primary   #3b82f6
+   secondary #64748b
+   success   #06b6d4
+   background#f9fafb
+   surface   #ffffff
+   text      #111827
+*/
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+:root {
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #64748b;
+
+  --primary: #3b82f6;
+  --success: #06b6d4;
+
+  --border: rgba(17, 24, 39, 0.08);
+  --shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+
+  --radius: 16px;
 }
 
 .App {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.pomodoro-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.pomodoro-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
   text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.pomodoro-header {
+  margin-bottom: 18px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.session-badge {
+  display: inline-flex;
+  gap: 10px;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(59, 130, 246, 0.08);
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.session-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+.session-label {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.session-subtitle {
+  margin: 10px 0 0;
+  color: var(--muted);
   font-size: 14px;
-  font-weight: 600;
+}
+
+.timer-display {
+  margin: 18px 0 22px;
+}
+
+.time-text {
+  font-variant-numeric: tabular-nums;
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.progress-wrap {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(100, 116, 139, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  border-radius: 999px;
+  transition: width 250ms ease;
+}
+
+.progress-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+    border-color 120ms ease, opacity 120ms ease;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.35);
+  outline-offset: 2px;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 10px 22px rgba(59, 130, 246, 0.3);
+}
+
+.btn-secondary {
+  background: var(--muted);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(100, 116, 139, 0.22);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  box-shadow: 0 10px 22px rgba(100, 116, 139, 0.28);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(17, 24, 39, 0.04);
+}
+
+.pomodoro-footer {
+  margin-top: 18px;
+}
+
+.helper-text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 420px) {
+  .pomodoro-card {
+    padding: 22px 16px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .time-text {
+    font-size: 54px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
   }
 }
